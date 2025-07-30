@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,8 +10,6 @@ import {
 } from 'react-native';
 import {
   CameraPosition,
-  DrawableFrame,
-  Frame,
   Camera as VisionCamera,
   useCameraDevice,
   useCameraPermission,
@@ -21,44 +20,29 @@ import {
   Face,
   FaceDetectionOptions,
 } from 'react-native-vision-camera-face-detector';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import {useSharedValue} from 'react-native-reanimated';
 
-/**
- * Entry point component
- */
-function Index() {
-  return <FaceDetection />;
-}
-
-/**
- * Face detection component
- */
-function FaceDetection() {
+export function FaceDetection({onPressBack}: {onPressBack: () => void}) {
   const {width, height} = useWindowDimensions();
   const {hasPermission, requestPermission} = useCameraPermission();
-  const [cameraMounted, setCameraMounted] = React.useState<boolean>(false);
-  const [cameraPaused, setCameraPaused] = React.useState<boolean>(false);
-  const [autoMode, setAutoMode] = React.useState<boolean>(true);
-  const [cameraFacing, setCameraFacing] =
-    React.useState<CameraPosition>('front');
+  const [cameraMounted, setCameraMounted] = useState<boolean>(false);
+  const [cameraPaused, setCameraPaused] = useState<boolean>(false);
+  const [autoMode, setAutoMode] = useState<boolean>(true);
+  const [cameraFacing, setCameraFacing] = useState<CameraPosition>('front');
 
   // Polygon detection states
   const [polygonColor, setPolygonColor] = useState<'red' | 'green'>('red');
-  const [faceInsidePolygon, setFaceInsidePolygon] = React.useState(false);
-  const [detectedFaces, setDetectedFaces] = React.useState<Face[]>([]);
+  const [faceInsidePolygon, setFaceInsidePolygon] = useState(false);
+  const [detectedFaces, setDetectedFaces] = useState<Face[]>([]);
 
   // Timer states for 5-second event
-  const [timeLeft, setTimeLeft] = React.useState(5);
-  const [isTimerActive, setIsTimerActive] = React.useState(false);
-  const [eventTriggered, setEventTriggered] = React.useState(false);
+  const [timeLeft, setTimeLeft] = useState(5);
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [eventTriggered, setEventTriggered] = useState(false);
 
-  const timerRef = React.useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const faceDetectionOptions = React.useRef<FaceDetectionOptions>({
+  const faceDetectionOptions = useRef<FaceDetectionOptions>({
     performanceMode: 'fast',
     classificationMode: 'all',
     contourMode: 'all',
@@ -73,7 +57,7 @@ function FaceDetection() {
   //
   // vision camera ref
   //
-  const camera = React.useRef<VisionCamera>(null);
+  const camera = useRef<VisionCamera>(null);
   //
   // face rectangle position
   //
@@ -139,7 +123,7 @@ function FaceDetection() {
   }, [hasPermission, requestPermission]);
 
   // Timer effect for 5-second event
-  React.useEffect(() => {
+  useEffect(() => {
     const triggerEvent = () => {
       setEventTriggered(true);
       setIsTimerActive(false);
@@ -197,7 +181,7 @@ function FaceDetection() {
    * @param {Frame} frame Current frame
    * @returns {void}
    */
-  function handleFacesDetected(faces: Face[], frame: Frame): void {
+  function handleFacesDetected(faces: Face[]): void {
     setDetectedFaces(faces);
 
     // if no faces are detected we do nothing
@@ -255,6 +239,7 @@ function FaceDetection() {
             justifyContent: 'center',
           },
         ]}>
+        <Button title="Back" onPress={onPressBack} />
         {hasPermission && cameraDevice ? (
           <>
             {cameraMounted && (
@@ -485,5 +470,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-export default Index;
