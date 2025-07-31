@@ -239,7 +239,6 @@ export function FaceDetection({onPressBack}: {onPressBack: () => void}) {
             justifyContent: 'center',
           },
         ]}>
-        <Button title="Back" onPress={onPressBack} />
         {hasPermission && cameraDevice ? (
           <>
             {cameraMounted && (
@@ -379,7 +378,7 @@ export function FaceDetection({onPressBack}: {onPressBack: () => void}) {
             title={`${autoMode ? 'Disable' : 'Enable'} AutoMode`}
           />
 
-          <Button onPress={resetDetection} title="Reset" />
+          <Button onPress={onPressBack} title="Back" />
         </View>
         <View
           style={{

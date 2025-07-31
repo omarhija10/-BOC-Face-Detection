@@ -2,9 +2,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-<!-- optionally, if you want to record audio: -->
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
     <application
       android:name=".MainApplication"

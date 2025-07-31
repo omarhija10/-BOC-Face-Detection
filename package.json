@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@react-native-community/hooks": "^100.1.0",
+    "@react-native-voice/voice": "^3.2.4",
     "@shopify/react-native-skia": "^2.1.1",
     "react": "19.0.0",
     "react-native": "0.79.5",
+    "react-native-audio-recorder-player": "^4.2.1",
+    "react-native-nitro-modules": "^0.27.2",
     "react-native-reanimated": "^4.0.1",
     "react-native-vision-camera": "^4.7.1",
     "react-native-vision-camera-face-detector": "^1.8.6",

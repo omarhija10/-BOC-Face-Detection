@@ -1,13 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 import {useState} from 'react';
-import {Button, View} from 'react-native';
+import {Button, SafeAreaView, View} from 'react-native';
 import {FaceDetection} from './FaceDetection';
-import VoiceDetection from './VoiceDetection';
+import {VoiceDetection} from './VoiceDetection';
 
 export function Index() {
-  const [activeTab, setActiveTab] = useState<'face' | 'voice' | 'main'>('face');
+  const [activeTab, setActiveTab] = useState<'face' | 'voice' | 'main'>('main');
 
   return (
-    <View>
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       {activeTab === 'main' && (
         <View>
           <Button title="Face Detection" onPress={() => setActiveTab('face')} />
@@ -23,6 +25,6 @@ export function Index() {
       {activeTab === 'voice' && (
         <VoiceDetection onPressBack={() => setActiveTab('main')} />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
